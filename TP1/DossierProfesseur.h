@@ -5,16 +5,18 @@ class DossierProfesseur
 		char* sigle;
 		int NbreEtud;
 		Cours* suivant;
-	};
+	};
+
 	struct Professeur {
 		char* nom;
 		int anciennete;
 		Cours* listeCours;
 		Professeur* suivant;
-	};	
+	};
+	
 private:
 	// début de la liste chaînée.
-	Professeur *tete; 
+	Professeur* tete; 
 public:
 	// construit la liste chaînée en mémoire à partir du fichier FP.
 	DossierProfesseur(char* FP); 
