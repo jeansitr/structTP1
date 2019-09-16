@@ -1,0 +1,39 @@
+Jean-Simon Tremblay
+2
+INF101
+28
+INF102
+29
+INF103
+17
+&
+Maxime Tremblay
+5
+INF101
+28
+INF105
+13
+INF104
+30
+INF106
+18
+&
+Maxime Dicaire
+1
+INF106
+18
+INF102
+22
+INF109
+17
+INF106
+21
+&
+Kaïa Leclerc
+12
+EDU104
+34
+SCI101
+12
+ANG001
+3

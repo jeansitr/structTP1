@@ -40,5 +40,11 @@ public:
 	// recopie à partir de la liste chaînée le nom, ancienneté et le nombre
 	//de cours demandés pour chaque professeur dans le fichier texte Nouveau.
 	void Recopier(char *Nouveau); 
+
+	//Ajoute un professeur dans la liste
+	void AjoutProfesseur(Professeur* prof);
+
+	//Ajoute un cour a un professeur donné
+	void AjoutCours(Professeur* prof, Cours* cour);
 };
 
