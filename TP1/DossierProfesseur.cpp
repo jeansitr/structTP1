@@ -11,7 +11,6 @@ DossierProfesseur::DossierProfesseur(char* FP)
 	while (teacher) {
 		char* tokenSuivant;
 		Professeur* newProf = new Professeur();
-		std::cout << teacher << "\n";
 
 		newProf->nom = strtok_s(teacher, "\n", &tokenSuivant);
 		newProf->anciennete = std::stoi(strtok_s(tokenSuivant, "\n", &tokenSuivant));
@@ -31,12 +30,34 @@ DossierProfesseur::DossierProfesseur(char* FP)
 }
 
 
-DossierProfesseur::~DossierProfesseur()
-{
+DossierProfesseur::~DossierProfesseur() {
+	while (tete != NULL) {
+		Professeur* profCourant = tete;
+
+		while (profCourant->listeCours != NULL) {
+			Cours* courCourant = profCourant->listeCours;
+			profCourant->listeCours = profCourant->listeCours->suivant;
+			delete courCourant;
+		}
+		tete = tete->suivant;
+		delete profCourant;
+	}
 }
 
 void DossierProfesseur::Supprimer(char* NOM) {
-
+	if (tete->nom == NOM)
+		tete = tete->suivant;
+	else {
+		Professeur* current = tete;
+		bool deleted = false;
+	
+		while (!deleted && current->suivant) {
+			if (*current->suivant->nom == *NOM) {
+				current->suivant = current->suivant->suivant;
+				deleted = true;
+			}
+		}
+	}
 }
 
 /*
