@@ -3,7 +3,6 @@
 #include <string>
 #include <iostream>
 
-
 DossierProfesseur::DossierProfesseur(char* FP)
 {
 	char* profSuivant;
@@ -28,7 +27,6 @@ DossierProfesseur::DossierProfesseur(char* FP)
 		teacher = strtok_s(profSuivant, "&", &profSuivant);
 	}
 }
-
 
 DossierProfesseur::~DossierProfesseur() {
 	while (tete != NULL) {
@@ -64,6 +62,7 @@ void DossierProfesseur::Supprimer(char* NOM) {
 int DossierProfesseur::Commun(char* X, char* Y) {
 	
 }
+
 char* DossierProfesseur::LecoursLeplusDemande() const {
 
 }
@@ -71,10 +70,11 @@ char* DossierProfesseur::LecoursLeplusDemande() const {
 char* DossierProfesseur::ProfeseurLeplusAncien() const {
 
 }
-*/
-void DossierProfesseur::Recopier(char *Nouveau) {
+
+void DossierProfesseur::Recopier(char* Nouveau) {
 
 }
+*/
 
 void DossierProfesseur::AjoutProfesseur(DossierProfesseur::Professeur* prof) {
 	bool dernierTrouver = false;
