@@ -50,27 +50,88 @@ void DossierProfesseur::Supprimer(char* NOM) {
 		bool deleted = false;
 	
 		while (!deleted && current->suivant) {
-			if (*current->suivant->nom == *NOM) {
+			if (strcmp(current->suivant->nom,NOM) == 0) {
 				current->suivant = current->suivant->suivant;
 				deleted = true;
+			}
+			else {
+				current = current->suivant;
 			}
 		}
 	}
 }
 
-/*
+
 int DossierProfesseur::Commun(char* X, char* Y) {
-	
+	Professeur* prof1 = tete;
+	Professeur* prof2 = tete;
+
+	Professeur* current = tete;
+	bool foundProf = false;
+
+	while (!foundProf && current->suivant) {
+		if (strcmp(current->nom,X) == 0) {
+			foundProf = true;
+			prof1 = current;
+		}
+
+		current = current->suivant;
+	}
+
+	current = tete;
+	foundProf = false;
+
+	while (!foundProf && current->suivant) {
+		if (strcmp(current->nom, Y) == 0) {
+			foundProf = true;
+			prof2 = current;
+		}
+
+		current = current->suivant;
+	}
+
+	int coursCommun = 0;
+	Cours* currentCoursProf1 = prof1->listeCours;
+
+	while (currentCoursProf1) {
+		Cours* currentCoursProf2 = prof2->listeCours;
+		while (currentCoursProf2) {
+			if (strcmp(currentCoursProf1->sigle, currentCoursProf2->sigle) == 0) {
+				coursCommun++;
+			}
+			currentCoursProf2 = currentCoursProf2->suivant;
+		}
+		delete currentCoursProf2;
+		currentCoursProf1 = currentCoursProf1->suivant;
+	}
+
+	delete currentCoursProf1;
+	delete prof1;
+	delete prof2;
+	return coursCommun;
 }
 
-char* DossierProfesseur::LecoursLeplusDemande() const {
-
+/*
+char* DossierProfesseur::LecoursLeplusDemande() const {	
 }
+
+*/
 
 char* DossierProfesseur::ProfeseurLeplusAncien() const {
+	Professeur* current = tete;
+	Professeur* oldest = tete;
 
+	while (current) {
+		if (current->anciennete > oldest->anciennete) {
+			oldest = current;
+		}
+		current = current->suivant;
+	}
+
+	delete current;
+	return oldest->nom;
 }
-
+/*
 void DossierProfesseur::Recopier(char* Nouveau) {
 
 }

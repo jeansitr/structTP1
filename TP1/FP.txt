@@ -8,7 +8,7 @@ INF103
 17
 &
 Maxime Tremblay
-5
+13
 INF101
 28
 INF105
@@ -20,6 +20,8 @@ INF106
 &
 Maxime Dicaire
 1
+INF103
+17
 INF106
 18
 INF102
