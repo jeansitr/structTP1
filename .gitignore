@@ -335,6 +335,7 @@ Thumbs.db
 *.exe
 *.bak
 *.cache
+*.orig
 [Bb]in
 [Dd]ebug*/
 *.lib
