@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "DossierProfesseur.h"
-#include <string>
 #include <iostream>
 
 DossierProfesseur::DossierProfesseur(char* FP)
@@ -20,10 +19,19 @@ DossierProfesseur::DossierProfesseur(char* FP)
 			newCour->sigle = strtok_s(tokenSuivant, "\n", &tokenSuivant);
 			newCour->NbreEtud = std::stoi(strtok_s(tokenSuivant, "\n", &tokenSuivant));
 
-			AjoutCours(newProf, newCour);
+			if (newProf->listeCours) 
+				newProf->listeCours->AjoutCours(newCour);
+			else 
+				newProf->listeCours = newCour;
+		}
+		
+		if (tete) {
+			tete->AjoutProfesseur(newProf);
+		}
+		else {
+			tete = newProf;
 		}
 
-		AjoutProfesseur(newProf);
 		teacher = strtok_s(profSuivant, "&", &profSuivant);
 	}
 }
@@ -63,11 +71,12 @@ void DossierProfesseur::Supprimer(char* NOM) {
 
 
 int DossierProfesseur::Commun(char* X, char* Y) {
-	Professeur* prof1;
-	Professeur* prof2;
+	Professeur* prof1 = nullptr;
+	Professeur* prof2 = nullptr;
 
 	Professeur* current = tete;
 	bool foundProf = false;
+	int coursCommun = 0;
 
 	while (!foundProf && current->suivant) {
 		if (strcmp(current->nom, X) == 0) {
@@ -83,25 +92,79 @@ int DossierProfesseur::Commun(char* X, char* Y) {
 		current = current->suivant;
 	}
 
-	int coursCommun = 0;
-	Cours* currentCoursProf1 = prof1->listeCours;
+	if (foundProf) {
+		Cours* currentCoursProf1 = prof1->listeCours;
 
-	while (currentCoursProf1) {
-		Cours* currentCoursProf2 = prof2->listeCours;
-		while (currentCoursProf2) {
-			if (strcmp(currentCoursProf1->sigle, currentCoursProf2->sigle) == 0) {
-				coursCommun++;
+		while (currentCoursProf1) {
+			Cours* currentCoursProf2 = prof2->listeCours;
+			while (currentCoursProf2) {
+				if (strcmp(currentCoursProf1->sigle, currentCoursProf2->sigle) == 0) {
+					coursCommun++;
+				}
+				currentCoursProf2 = currentCoursProf2->suivant;
 			}
-			currentCoursProf2 = currentCoursProf2->suivant;
+			currentCoursProf1 = currentCoursProf1->suivant;
 		}
-		currentCoursProf1 = currentCoursProf1->suivant;
 	}
-
 	return coursCommun;
 }
 
-char* DossierProfesseur::LecoursLeplusDemande() const {	
-	return (char *)"Not implemented";
+char* DossierProfesseur::LecoursLeplusDemande() const {
+	char* mostWantedSigle = (char*)"";
+	int mostWantedNbr = -1;
+	int mostWantedNbrEtu = -1;
+	Cours* coursVérifier = new Cours();
+	Professeur* iProf = tete;
+	while (iProf) {
+		Cours* iCour = iProf->listeCours;
+		while (iCour) {
+			char* currentWantedSigle = iCour->sigle;
+			int currentWantedNbrEtu = iCour->NbreEtud;
+
+			if (!coursVérifier->IncludesSigle(currentWantedSigle)) {
+				if (!coursVérifier->sigle) {
+					coursVérifier = new Cours(currentWantedSigle, currentWantedNbrEtu);
+				}
+				else {
+					coursVérifier->AjoutCoursNewCours(currentWantedSigle, currentWantedNbrEtu);
+				}
+
+				int currentWantedNbr = 1;
+
+				Professeur* eProf = tete;
+				while (eProf) {
+					if (iProf != eProf) {
+						Cours* eCour = eProf->listeCours;
+						while (eCour)
+						{
+							if (strcmp(currentWantedSigle, eCour->sigle) == 0) {
+								currentWantedNbr++;
+								currentWantedNbrEtu += eCour->NbreEtud;
+							}
+
+							eCour = eCour->suivant;
+						}
+					}
+
+					eProf = eProf->suivant;
+				}
+
+				if (currentWantedNbr >= mostWantedNbr) {
+					if ((currentWantedNbr == mostWantedNbr && currentWantedNbrEtu > mostWantedNbrEtu) || currentWantedNbr != mostWantedNbr) {
+						mostWantedSigle = currentWantedSigle;
+						mostWantedNbr = currentWantedNbr;
+						mostWantedNbrEtu = currentWantedNbrEtu;
+					}
+				}
+			}
+
+			iCour = iCour->suivant;
+		}
+
+		iProf = iProf->suivant;
+	}
+
+	return mostWantedSigle;
 }
 
 
@@ -122,40 +185,4 @@ char* DossierProfesseur::ProfeseurLeplusAncien() const {
 
 void DossierProfesseur::Recopier(char* Nouveau) {
 
-}
-
-void DossierProfesseur::AjoutProfesseur(DossierProfesseur::Professeur* prof) {
-	bool dernierTrouver = false;
-	if (tete){
-		Professeur* profSuivant = tete;
-		do {
-			if (profSuivant->suivant)
-				profSuivant = profSuivant->suivant;
-			else {
-				profSuivant->suivant = prof;
-				dernierTrouver = true;
-			}
-		} while (!dernierTrouver);
-	}
-	else {
-		tete = prof;
-	}
-}
-
-void DossierProfesseur::AjoutCours(DossierProfesseur::Professeur* prof, DossierProfesseur::Cours* cour) { 
-	bool dernierTrouver = false;
-	Cours* courSuivant = prof->listeCours;
-	if (courSuivant) {
-		do {
-			if (courSuivant->suivant)
-				courSuivant = courSuivant->suivant;
-			else {
-				courSuivant->suivant = cour;
-				dernierTrouver = true;
-			}
-		} while (!dernierTrouver);
-	}
-	else {
-		prof->listeCours = cour;
-	}
 }

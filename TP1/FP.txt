@@ -22,8 +22,6 @@ Maxime Dicaire
 1
 INF103
 17
-INF106
-18
 INF102
 22
 INF109
