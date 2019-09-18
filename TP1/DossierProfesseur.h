@@ -1,10 +1,61 @@
 #pragma once
+#include <string>
+
 class DossierProfesseur
 {
 	struct Cours {
 		char* sigle;
 		int NbreEtud;
 		Cours* suivant;
+
+		Cours(char* _sigle, int _nbreEtud) {
+			sigle = _sigle;
+			NbreEtud = _nbreEtud;
+			suivant = nullptr;
+		};
+
+		Cours() {
+			sigle = nullptr;
+			NbreEtud = NULL;
+			suivant = nullptr;
+		};
+
+		void AjoutCours(Cours* cour) {
+			Cours* current = this;
+			while (current) {
+				if (!current->suivant)
+					current = current->suivant = cour;
+				
+				current = current->suivant;
+			}
+		};
+
+		void AjoutCoursNewCours(char* _sigle, int _nbreEtu) {
+			Cours* current = this;
+			while (current) {
+				if (!current->suivant)
+					current = current->suivant = new Cours(_sigle, _nbreEtu);
+
+				current = current->suivant;
+			}
+		};
+
+		bool IncludesSigle(char* sigle) {
+			Cours* current = this;
+			while (current) 
+			{
+				char* currentSigle = current->sigle;
+				if (currentSigle) {
+					if (strcmp(current->sigle, sigle) == 0) {
+						return true;
+					}	
+				}
+
+				current = current->suivant;
+			} 
+
+			return false;
+		};
 	};
 
 	struct Professeur {
@@ -12,6 +63,16 @@ class DossierProfesseur
 		int anciennete;
 		Cours* listeCours;
 		Professeur* suivant;
+
+		void AjoutProfesseur(Professeur* prof) {
+			Professeur* current = this;
+			while (current) {
+				if (!current->suivant)
+					current = current->suivant = prof;
+				
+				current = current->suivant;
+			}
+		}
 	};
 	
 private:
@@ -40,11 +101,5 @@ public:
 	// recopie à partir de la liste chaînée le nom, ancienneté et le nombre
 	//de cours demandés pour chaque professeur dans le fichier texte Nouveau.
 	void Recopier(char *Nouveau); 
-
-	//Ajoute un professeur dans la liste
-	void AjoutProfesseur(Professeur* prof);
-
-	//Ajoute un cour a un professeur donné
-	void AjoutCours(Professeur* prof, Cours* cour);
 };
 
