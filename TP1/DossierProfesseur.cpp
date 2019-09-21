@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "DossierProfesseur.h"
 #include <iostream>
+#include <fstream>
 
 DossierProfesseur::DossierProfesseur(char* FP)
 {
@@ -184,5 +185,27 @@ char* DossierProfesseur::ProfeseurLeplusAncien() const {
 }
 
 void DossierProfesseur::Recopier(char* Nouveau) {
+	std::ofstream ofs (Nouveau, std::ofstream::out);
 
+	Professeur* current = tete;
+
+	while (current) {
+		ofs << current->nom << "\n";
+		ofs << current->anciennete << "\n";
+		
+		Cours* coursCurrent = current->listeCours;
+		int cpt = 0;
+
+		while (coursCurrent) {
+			//ofs << coursCurrent->sigle << "\n";
+			//ofs << coursCurrent->NbreEtud << "\n";
+			cpt++;
+			coursCurrent = coursCurrent->suivant;
+		}
+
+		ofs << cpt << "\n";
+		current = current->suivant;
+	}
+
+	ofs.close();
 }
