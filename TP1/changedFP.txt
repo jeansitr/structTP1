@@ -1,30 +1,9 @@
 Jean-Simon Tremblay
 2
-INF101
-28
-INF102
-29
-INF103
-17
-&
+Nombre de cours demander: 3
 Maxime Tremblay
 13
-INF101
-28
-INF105
-13
-INF104
-30
-INF106
-18
-&
+Nombre de cours demander: 4
 Maxime Dicaire
 1
-INF103
-17
-INF102
-22
-INF109
-17
-INF106
-21
+Nombre de cours demander: 4
