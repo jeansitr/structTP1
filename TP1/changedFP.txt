@@ -1,9 +1,30 @@
 Jean-Simon Tremblay
 2
-Nombre de cours demander: 3
+INF101
+28
+INF102
+29
+INF103
+17
+&
 Maxime Tremblay
 13
-Nombre de cours demander: 4
+INF101
+28
+INF105
+13
+INF104
+30
+INF106
+18
+&
 Maxime Dicaire
 1
-Nombre de cours demander: 4
+INF103
+17
+INF102
+22
+INF109
+17
+INF106
+21
