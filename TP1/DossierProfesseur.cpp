@@ -190,6 +190,10 @@ void DossierProfesseur::Recopier(char* Nouveau) {
 	Professeur* current = tete;
 
 	while (current) {
+		if (current != tete) {
+			ofs << "&\n";
+		}
+
 		ofs << current->nom << "\n";
 		ofs << current->anciennete << "\n";
 		
@@ -203,7 +207,7 @@ void DossierProfesseur::Recopier(char* Nouveau) {
 			coursCurrent = coursCurrent->suivant;
 		}
 
-		ofs << cpt << "\n";
+		ofs << "Nombre de cours demander: " << cpt << "\n";
 		current = current->suivant;
 	}
 
