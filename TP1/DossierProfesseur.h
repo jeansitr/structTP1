@@ -20,6 +20,7 @@ class DossierProfesseur
 			suivant = nullptr;
 		};
 
+		//Ajout un cour existant dans la iste
 		void AjoutCours(Cours* cour) {
 			Cours* current = this;
 			while (current) {
@@ -30,6 +31,7 @@ class DossierProfesseur
 			}
 		};
 
+		//Ajout un nouveau cour dans la liste
 		void AjoutCoursNewCours(char* _sigle, int _nbreEtu) {
 			Cours* current = this;
 			while (current) {
@@ -40,6 +42,7 @@ class DossierProfesseur
 			}
 		};
 
+		//Vérifie si le sigle existe dans la lise
 		bool IncludesSigle(char* sigle) {
 			Cours* current = this;
 			while (current) 
@@ -64,6 +67,7 @@ class DossierProfesseur
 		Cours* listeCours;
 		Professeur* suivant;
 
+		//Ajout un professeur dans la liste
 		void AjoutProfesseur(Professeur* prof) {
 			Professeur* current = this;
 			while (current) {

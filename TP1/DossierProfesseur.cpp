@@ -6,12 +6,14 @@
 DossierProfesseur::DossierProfesseur(char* FP)
 {
 	char* profSuivant;
-	char* teacher = strtok_s(FP, "&", &profSuivant);
-	while (teacher) {
+	char* chaineProfesseur = strtok_s(FP, "&", &profSuivant);
+
+	//Ajoute les professeur et les cours dans des liste selon la structure demmander.
+	while (chaineProfesseur) {
 		char* tokenSuivant;
 		Professeur* newProf = new Professeur();
 
-		newProf->nom = strtok_s(teacher, "\n", &tokenSuivant);
+		newProf->nom = strtok_s(chaineProfesseur, "\n", &tokenSuivant);
 		newProf->anciennete = std::stoi(strtok_s(tokenSuivant, "\n", &tokenSuivant));
 
 		while (tokenSuivant && tokenSuivant[0]) {
@@ -33,7 +35,7 @@ DossierProfesseur::DossierProfesseur(char* FP)
 			tete = newProf;
 		}
 
-		teacher = strtok_s(profSuivant, "&", &profSuivant);
+		chaineProfesseur = strtok_s(profSuivant, "&", &profSuivant);
 	}
 }
 
@@ -116,12 +118,14 @@ char* DossierProfesseur::LecoursLeplusDemande() const {
 	int mostWantedNbrEtu = -1;
 	Cours* coursVérifier = new Cours();
 	Professeur* iProf = tete;
+	//Vérifie pour chaque cours de chaque professeur si le cour existe dans la liste de cours des autres professeur
 	while (iProf) {
 		Cours* iCour = iProf->listeCours;
 		while (iCour) {
 			char* currentWantedSigle = iCour->sigle;
 			int currentWantedNbrEtu = iCour->NbreEtud;
-
+					
+			//vérifie si le cour à déja été vérifier.
 			if (!coursVérifier->IncludesSigle(currentWantedSigle)) {
 				if (!coursVérifier->sigle) {
 					coursVérifier = new Cours(currentWantedSigle, currentWantedNbrEtu);
