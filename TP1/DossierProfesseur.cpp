@@ -5,12 +5,12 @@
 
 DossierProfesseur::DossierProfesseur(char* FP)
 {
-	char* profSuivant;
+	char* profSuivant = (char*)"";
 	char* chaineProfesseur = strtok_s(FP, "&", &profSuivant);
 
 	//Ajoute les professeur et les cours dans des liste selon la structure demmander.
 	while (chaineProfesseur) {
-		char* tokenSuivant;
+		char* tokenSuivant = (char*)"";
 		Professeur* newProf = new Professeur();
 
 		newProf->nom = strtok_s(chaineProfesseur, "\n", &tokenSuivant);
@@ -211,7 +211,7 @@ void DossierProfesseur::Recopier(char* Nouveau) {
 			coursCurrent = coursCurrent->suivant;
 		}
 
-		ofs << "Nombre de cours demander: " << cpt << "\n";
+		ofs << "Nombre de cours demander: " << cpt << std::endl;
 		current = current->suivant;
 	}
 
